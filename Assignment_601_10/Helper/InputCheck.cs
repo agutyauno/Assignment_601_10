@@ -4,103 +4,45 @@ namespace Assignment_601_10.Helper
     {
         public static string String(string message = "")
         {
-            string? input;
             while (true)
             {
                 Console.Write(message);
-                input = Console.ReadLine();
+                var input = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(input))
                 {
-                    break;
+                    return input;
                 }
                 Console.WriteLine("nhap khong hop le, moi nhap lai! ");
             }
-            return input;
         }
 
-        public static decimal Decimal(string message = "", bool isNullAllow = false)
+        public static T? GetValue<T>(string message = "", bool isNullAllow = false) where T : IConvertible
         {
-            string? input;
-            decimal n;
             while (true)
             {
                 Console.Write(message);
-                input = Console.ReadLine();
-                if (decimal.TryParse(input, out n) || isNullAllow)
+                string? input = Console.ReadLine();
+                
+                try
                 {
-                    break;
-                }
-                Console.WriteLine("nhap khong hop le, moi nhap lai! ");
-            }
-            return n;
-        }
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        if (isNullAllow) return default;
+                        Console.WriteLine("nhap khong hop le, moi nhap lai! ");
+                        continue;
+                    }
 
-        public static int Int(string message = "", bool isNullAllow = false)
-        {
-            string? input;
-            int n;
-            while (true)
-            {
-                Console.Write(message);
-                input = Console.ReadLine();
-                if (int.TryParse(input, out n) || isNullAllow)
-                {
-                    break;
-                }
-                Console.WriteLine("nhap khong hop le, moi nhap lai! ");
-            }
-            return n;
-        }
+                    if (typeof(T) == typeof(DateOnly) && DateOnly.TryParse(input, out var date))
+                        return (T)(object)date;
 
-        public static float Float(string message = "", bool isNullAllow = false)
-        {
-            string? input;
-            float n;
-            while (true)
-            {
-                Console.Write(message);
-                input = Console.ReadLine();
-                if (float.TryParse(input, out n) || isNullAllow)
-                {
-                    break;
+                    object? converted = Convert.ChangeType(input, typeof(T));
+                    return converted == null ? default : (T)converted;
                 }
-                Console.WriteLine("nhap khong hop le, moi nhap lai! ");
-            }
-            return n;
-        }
-
-        public static double Double(string message = "", bool isNullAllow = false)
-        {
-            string? input;
-            double n;
-            while (true)
-            {
-                Console.Write(message);
-                input = Console.ReadLine();
-                if (double.TryParse(input, out n) || isNullAllow)
+                catch
                 {
-                    break;
+                    Console.WriteLine("nhap khong hop le, moi nhap lai! ");
                 }
-                Console.WriteLine("nhap khong hop le, moi nhap lai! ");
             }
-            return n;
-        }
-
-        public static DateOnly GetDateOnly(string message = "", bool isNullAllow = false)
-        {
-            string? input;
-            DateOnly n;
-            while (true)
-            {
-                Console.Write(message);
-                input = Console.ReadLine();
-                if (DateOnly.TryParse(input, out n) || isNullAllow)
-                {
-                    break;
-                }
-                Console.WriteLine("nhap khong hop le, moi nhap lai! ");
-            }
-            return n;
         }
     }
 }
