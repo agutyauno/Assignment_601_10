@@ -2,17 +2,20 @@ namespace Assignment_601_10.Helper
 {
     public static class InputCheck
     {
-        public static string String(string message = "")
+        public static string String(string message = "", bool isNullAllow = false)
         {
             while (true)
             {
-                Console.Write(message);
-                var input = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(input))
-                {
-                    return input;
-                }
+            Console.Write(message);
+            var input = Console.ReadLine();
+            
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                if (isNullAllow) return string.Empty;
                 Console.WriteLine("nhap khong hop le, moi nhap lai! ");
+                continue;
+            }
+            return input;
             }
         }
 
