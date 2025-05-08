@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Assignment_601_10.Movies
 {
-    internal class Movie
-    {
+        public class Movie
+        {
+            public string Title { get; }
+            public Movie(string title) => Title = title;
+        }
     }
-}
+
